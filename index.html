@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Desafio das Palavras Bíblicas</title>
+  <style>
+    :root {
+      --cor-primaria: #2c3e50;
+      --cor-secundaria: #3498db;
+      --cor-sucesso: #2ecc71;
+      --cor-erro: #e74c3c;
+      --cor-fundo: #f8f9fa;
+      --cor-texto: #2c3e50;
+      --cor-borda: #e0e0e0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 10px;
+      max-width: 800px;
+      margin: auto;
+      background-color: var(--cor-fundo);
+      color: var(--cor-texto);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container {
+      background-color: white;
+      padding: 15px;
+      border-radius: 15px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: auto;
+    }
+
+    select {
+      margin: 0 3px;
+      font-size: 0.9rem;
+      padding: 6px 10px;
+      border-radius: 6px;
+      border: 2px solid var(--cor-borda);
+      transition: all 0.3s;
+      background-color: white;
+      cursor: pointer;
+    }
+
+    select:hover {
+      border-color: var(--cor-secundaria);
+    }
+
+    select.correta {
+      background-color: #d4edda;
+      border-color: var(--cor-sucesso);
+      color: #155724;
+    }
+
+    select.incorreta {
+      background-color: #f8d7da;
+      border-color: var(--cor-erro);
+      color: #721c24;
+    }
+
+    .resultado {
+      margin-top: 10px;
+      font-weight: bold;
+      padding: 10px;
+      border-radius: 8px;
+      background-color: var(--cor-fundo);
+    }
+
+    .pergunta {
+      margin-top: 8px;
+      font-size: 1rem;
+      color: var(--cor-primaria);
+      font-weight: 500;
+    }
+
+    .referencia {
+      font-style: italic;
+      color: var(--cor-secundaria);
+      margin-bottom: 8px;
+      padding: 8px;
+      background-color: var(--cor-fundo);
+      border-radius: 8px;
+      border-left: 4px solid var(--cor-secundaria);
+    }
+
+    .fase {
+      margin-top: 8px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: var(--cor-primaria);
+      padding: 8px;
+      background-color: var(--cor-fundo);
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .alternativas {
+      margin-top: 15px;
+    }
+
+    .alternativa {
+      margin: 8px 0;
+      padding: 10px;
+      border: 2px solid var(--cor-borda);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 1rem;
+    }
+
+    .alternativa:hover {
+      background-color: var(--cor-fundo);
+      transform: translateY(-2px);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .alternativa.correta {
+      background-color: #d4edda;
+      border-color: var(--cor-sucesso);
+      color: #155724;
+    }
+
+    .alternativa.incorreta {
+      background-color: #f8d7da;
+      border-color: var(--cor-erro);
+      color: #721c24;
+    }
+
+    .navegacao {
+      margin-top: 15px;
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .navegacao button {
+      padding: 8px 15px;
+      border: none;
+      border-radius: 6px;
+      background-color: var(--cor-secundaria);
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .navegacao button:hover {
+      background-color: #2980b9;
+      transform: translateY(-2px);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .fase-container {
+      display: none;
+      margin-top: 20px;
+    }
+
+    .fase-container.ativa {
+      display: block;
+    }
+
+    .texto-com-lacunas {
+      line-height: 1.8;
+      font-size: 1.1rem;
+      padding: 15px;
+      background-color: var(--cor-fundo);
+      border-radius: 8px;
+    }
+
+    .pontuacao {
+      margin-top: 8px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: var(--cor-primaria);
+      padding: 8px;
+      background-color: var(--cor-fundo);
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .barra-progresso {
+      width: 100%;
+      height: 20px;
+      background-color: var(--cor-fundo);
+      border-radius: 10px;
+      margin-top: 8px;
+      overflow: hidden;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .progresso {
+      height: 100%;
+      background-color: var(--cor-sucesso);
+      transition: width 0.5s ease-in-out;
+    }
+
+    .tentativas {
+      margin-top: 8px;
+      color: var(--cor-primaria);
+      font-size: 1rem;
+      padding: 8px;
+      background-color: var(--cor-fundo);
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .reiniciar {
+      display: none;
+      margin: 15px auto;
+      padding: 10px 20px;
+      background-color: var(--cor-erro);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.3s;
+    }
+
+    .reiniciar:hover {
+      background-color: #c0392b;
+      transform: translateY(-2px);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    #texto-fase2 {
+      font-size: 1.1rem;
+      margin-top: 10px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 5px;
+      }
+      
+      .container {
+        padding: 10px;
+      }
+      
+      .navegacao {
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+      
+      .navegacao button {
+        flex: 1;
+        min-width: 120px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="pontuacao" id="pontuacao">Pontuação: 0</div>
+    <div class="tentativas" id="tentativas">Tentativas restantes: 3</div>
+    <div class="barra-progresso">
+      <div class="progresso" id="progresso" style="width: 0%"></div>
+    </div>
+    <div class="fase">Fase 1: Complete as lacunas</div>
+    <div id="fase1" class="fase-container ativa">
+      <div class="pergunta" id="pergunta-atual">Pergunta 1 de 6</div>
+      <div class="referencia" id="referencia"></div>
+      <div class="texto-com-lacunas" id="texto-processado"></div>
+      <div class="resultado" id="resultado"></div>
+    </div>
+
+    <div id="fase2" class="fase-container">
+      <div class="pergunta" id="pergunta-atual-fase2">Pergunta 1 de 6</div>
+      <p id="texto-fase2" style="font-size: 1.2rem; margin-top: 20px;"></p>
+      <div class="alternativas" id="alternativas"></div>
+      <div class="resultado" id="resultado-fase2"></div>
+    </div>
+
+    <div id="fase3" class="fase-container">
+      <div class="pergunta" id="pergunta-atual-fase3">Pergunta 1 de 6</div>
+      <div class="referencia" id="referencia-fase3"></div>
+      <div class="idioma-original" id="idioma-original"></div>
+      <p id="texto-fase3" style="font-size: 1.2rem; margin-top: 20px;"></p>
+      <div class="alternativas" id="alternativas-fase3"></div>
+      <div class="resultado" id="resultado-fase3"></div>
+      <div class="definicao" id="definicao-fase3" style="display: none; margin-top: 15px; padding: 10px; background-color: var(--cor-fundo); border-radius: 8px;"></div>
+      <button id="proxima-pergunta-fase3" style="display: none; margin-top: 15px; padding: 8px 15px; background-color: var(--cor-secundaria); color: white; border: none; border-radius: 6px; cursor: pointer;" onclick="proximaPerguntaFase3()">Próxima Pergunta</button>
+    </div>
+
+    <div class="navegacao">
+      <button onclick="mudarFase(1)" id="btn-fase1">Fase 1</button>
+      <button onclick="mudarFase(2)" id="btn-fase2">Fase 2</button>
+      <button onclick="mudarFase(3)" id="btn-fase3">Fase 3</button>
+    </div>
+    <button class="reiniciar" id="reiniciar" onclick="reiniciarJogo()">Reiniciar Jogo</button>
+  </div>
+
+  <script>
+    const versiculos = [
+      {
+        texto: "Seca-se a erva, e cai a flor, soprando nela o Espírito do Senhor. Na verdade o povo é erva. Seca-se a erva, e cai a flor, porém a palavra de nosso Deus subsiste eternamente.",
+        referencia: "Isaías 40:7, 8",
+        idioma: "Hebraico",
+        palavrasOriginais: [
+          {
+            palavra: "Deus",
+            original: "אֱלֹהִים",
+            transliteracao: "Elohim",
+            definicao: "Palavra hebraica para Deus, usada frequentemente no Antigo Testamento. Pode se referir ao Deus verdadeiro ou a deuses em geral."
+          }
+        ]
+      },
+      {
+        texto: "E aconteceu depois destas coisas, que provou Deus a Abraão, e disse-lhe: Abraão! E ele disse: Eis-me aqui. E disse: Toma agora teu filho, o teu único filho, Isaque, a quem amas, e vai-te à terra de Moriá, e oferece-o ali em holocausto sobre uma das montanhas, que eu te direi",
+        referencia: "Gênesis 22:1 e 2",
+        idioma: "Hebraico",
+        palavrasOriginais: [
+          {
+            palavra: "Deus",
+            original: "אֱלֹהִים",
+            transliteracao: "Elohim",
+            definicao: "Palavra hebraica para Deus, usada frequentemente no Antigo Testamento. Pode se referir ao Deus verdadeiro ou a deuses em geral."
+          },
+          {
+            palavra: "Abraão",
+            original: "אַבְרָהָם",
+            transliteracao: "Avraham",
+            definicao: "Nome hebraico que significa 'pai de muitas nações'. Foi o primeiro patriarca do povo de Israel."
+          }
+        ]
+      },
+      {
+        texto: "Porque Deus amou o mundo de tal maneira que deu o seu Filho unigênito, para que todo aquele que nele crê não pereça, mas tenha a vida eterna",
+        referencia: "João 3:16",
+        idioma: "Grego",
+        palavrasOriginais: [
+          {
+            palavra: "Deus",
+            original: "Θεός",
+            transliteracao: "Theos",
+            definicao: "Palavra grega para Deus, usada no Novo Testamento. Refere-se ao Deus supremo e único."
+          }
+        ]
+      },
+      {
+        texto: "E disse-me um dos anciãos: Não chores; eis aqui o Leão da tribo de Judá, a raiz de Davi, que venceu, para abrir o livro e desatar os seus sete selos",
+        referencia: "Apocalipse 5:5",
+        idioma: "Grego",
+        palavrasOriginais: [
+          {
+            palavra: "Davi",
+            original: "Δαυίδ",
+            transliteracao: "Dauid",
+            definicao: "Nome grego para o rei Davi, o segundo rei de Israel e ancestral de Jesus Cristo."
+          }
+        ]
+      },
+      {
+        texto: "E assim somos também considerados como falsas testemunhas de Deus, porque testificamos de Deus, que ressuscitou a Cristo, ao qual ele não ressuscitou, se, na verdade, os mortos não ressuscitam. Porque, se os mortos não ressuscitam, também Cristo não ressuscitou",
+        referencia: "1 Coríntios 15:15 e 16",
+        idioma: "Grego",
+        palavrasOriginais: [
+          {
+            palavra: "Deus",
+            original: "Θεός",
+            transliteracao: "Theos",
+            definicao: "Palavra grega para Deus, usada no Novo Testamento. Refere-se ao Deus supremo e único."
+          },
+          {
+            palavra: "Cristo",
+            original: "Χριστός",
+            transliteracao: "Christos",
+            definicao: "Palavra grega que significa 'ungido'. No Novo Testamento, refere-se ao Messias prometido."
+          }
+        ]
+      },
+      {
+        texto: "E viu-se um grande sinal no céu: uma mulher vestida do sol, tendo a lua debaixo dos seus pés, e uma coroa de doze estrelas sobre a sua cabeça",
+        referencia: "Apocalipse 12:1",
+        idioma: "Grego",
+        palavrasOriginais: [
+          {
+            palavra: "coroa",
+            original: "στέφανος",
+            transliteracao: "stephanos",
+            definicao: "Palavra grega que significa coroa ou grinalda. No contexto bíblico, frequentemente simboliza vitória, honra ou realeza."
+          }
+        ]
+      }
+    ];
+
+    // Variáveis do jogo
+    let pontuacao = 0;
+    let tentativasRestantes = 3;
+    let faseAtual = 1;
+
+    // Variáveis da Fase 1
+    let perguntaAtual = 0;
+    let textoOriginal = versiculos[perguntaAtual].texto;
+    let palavras = textoOriginal.split(/\s+/);
+    let palavrasSelecionadas = [];
+    let indicesSelecionados = [];
+    let respostaCompletaFase1 = false;
+
+    // Variáveis da Fase 2
+    let perguntaAtualFase2 = 0;
+    let versiculosEmbaralhados = [...versiculos];
+    let respostaSelecionadaFase2 = false;
+
+    // Variáveis da Fase 3
+    let perguntaAtualFase3 = 0;
+    let respostaSelecionadaFase3 = false;
+
+    function atualizarPontuacao(pontos) {
+      pontuacao += pontos;
+      document.getElementById("pontuacao").textContent = `Pontuação: ${pontuacao}`;
+    }
+
+    function atualizarTentativas() {
+      tentativasRestantes--;
+      document.getElementById("tentativas").textContent = `Tentativas restantes: ${tentativasRestantes}`;
+      
+      if (tentativasRestantes === 0) {
+        document.getElementById("reiniciar").style.display = "block";
+        document.querySelectorAll(".fase-container").forEach(container => {
+          container.style.display = "none";
+        });
+        document.querySelector(".navegacao").style.display = "none";
+        document.querySelector(".fase").style.display = "none";
+        document.querySelector(".barra-progresso").style.display = "none";
+      }
+    }
+
+    function atualizarProgresso() {
+      let progresso;
+      if (faseAtual === 1) {
+        progresso = (perguntaAtual / 6) * 100;
+      } else if (faseAtual === 2) {
+        progresso = (perguntaAtualFase2 / 6) * 100;
+      } else {
+        progresso = (perguntaAtualFase3 / 6) * 100;
+      }
+      document.getElementById("progresso").style.width = `${progresso}%`;
+    }
+
+    function reiniciarJogo() {
+      pontuacao = 0;
+      tentativasRestantes = 3;
+      perguntaAtual = 0;
+      perguntaAtualFase2 = 0;
+      perguntaAtualFase3 = 0;
+      faseAtual = 1;
+      
+      // Restaurar a exibição dos elementos
+      document.getElementById("reiniciar").style.display = "none";
+      document.querySelector(".navegacao").style.display = "flex";
+      document.querySelector(".fase").style.display = "block";
+      document.querySelector(".barra-progresso").style.display = "block";
+      
+      // Atualizar textos
+      document.getElementById("pontuacao").textContent = `Pontuação: ${pontuacao}`;
+      document.getElementById("tentativas").textContent = `Tentativas restantes: ${tentativasRestantes}`;
+      
+      // Reiniciar o jogo
+      prepararDesafio();
+      mudarFase(1);
+    }
+
+    function embaralhar(array) {
+      return array.sort(() => Math.random() - 0.5);
+    }
+
+    function prepararDesafio() {
+      respostaCompletaFase1 = false;
+      textoOriginal = versiculos[perguntaAtual].texto;
+      palavras = textoOriginal.split(/\s+/);
+      const palavrasTemp = [...palavras];
+      indicesSelecionados = [];
+
+      while (indicesSelecionados.length < 3) {
+        const i = Math.floor(Math.random() * palavrasTemp.length);
+        const palavra = palavrasTemp[i].replace(/[.,()]/g, '');
+        if (!indicesSelecionados.includes(i) && palavra.length > 2) {
+          indicesSelecionados.push(i);
+        }
+      }
+
+      palavrasSelecionadas = indicesSelecionados.map(i => palavras[i].replace(/[.,()]/g, ''));
+
+      const textoComLacunas = palavras.map((palavra, i) => {
+        const idx = indicesSelecionados.indexOf(i);
+        if (idx !== -1) {
+          return `<select id="lacuna-${idx}" onchange="verificarRespostaFase1(${idx})">
+                    <option value="">---</option>
+                  </select>`;
+        } else {
+          return palavra;
+        }
+      }).join(" ");
+
+      document.getElementById("texto-processado").innerHTML = textoComLacunas;
+      document.getElementById("pergunta-atual").textContent = `Pergunta ${perguntaAtual + 1} de 6`;
+      document.getElementById("referencia").textContent = versiculos[perguntaAtual].referencia;
+
+      const opcoes = embaralhar([...palavrasSelecionadas]);
+
+      for (let i = 0; i < 3; i++) {
+        const select = document.getElementById(`lacuna-${i}`);
+        select.innerHTML = '<option value="">---</option>';
+        opcoes.forEach(palavra => {
+          const option = document.createElement("option");
+          option.value = palavra;
+          option.textContent = palavra;
+          select.appendChild(option);
+        });
+      }
+
+      document.getElementById("resultado").textContent = "";
+      atualizarProgresso();
+    }
+
+    function verificarRespostaFase1(index) {
+      if (respostaCompletaFase1) return;
+
+      const select = document.getElementById(`lacuna-${index}`);
+      const valor = select.value;
+      const palavraCorreta = palavrasSelecionadas[index];
+
+      if (valor === palavraCorreta) {
+        select.classList.add("correta");
+        select.classList.remove("incorreta");
+      } else {
+        select.classList.add("incorreta");
+        select.classList.remove("correta");
+        atualizarTentativas();
+        if (tentativasRestantes === 0) return;
+      }
+
+      // Verifica se todas as lacunas foram preenchidas corretamente
+      const todosCorretos = indicesSelecionados.every(i => {
+        const select = document.getElementById(`lacuna-${indicesSelecionados.indexOf(i)}`);
+        return select.value === palavrasSelecionadas[indicesSelecionados.indexOf(i)];
+      });
+
+      if (todosCorretos) {
+        respostaCompletaFase1 = true;
+        atualizarPontuacao(10);
+        setTimeout(() => {
+          if (perguntaAtual < 5) {
+            perguntaAtual++;
+            prepararDesafio();
+          } else {
+            document.getElementById("resultado").textContent = "Parabéns! Você completou todas as perguntas!";
+          }
+        }, 1500);
+      }
+    }
+
+    function prepararDesafioFase2() {
+      respostaSelecionadaFase2 = false;
+      versiculosEmbaralhados = embaralhar([...versiculos]);
+      const versiculoAtual = versiculos[perguntaAtualFase2];
+      
+      document.getElementById("texto-fase2").textContent = versiculoAtual.texto;
+      document.getElementById("pergunta-atual-fase2").textContent = `Pergunta ${perguntaAtualFase2 + 1} de 6`;
+      
+      const alternativas = document.getElementById("alternativas");
+      alternativas.innerHTML = "";
+      
+      // Seleciona 3 referências aleatórias, incluindo a correta
+      const opcoes = [versiculoAtual.referencia];
+      while (opcoes.length < 3) {
+        const refAleatoria = versiculosEmbaralhados[Math.floor(Math.random() * versiculosEmbaralhados.length)].referencia;
+        if (!opcoes.includes(refAleatoria)) {
+          opcoes.push(refAleatoria);
+        }
+      }
+      
+      embaralhar(opcoes).forEach((opcao, index) => {
+        const div = document.createElement("div");
+        div.className = "alternativa";
+        div.textContent = opcao;
+        div.onclick = () => verificarAlternativa(index, opcao, versiculoAtual.referencia);
+        alternativas.appendChild(div);
+      });
+      
+      document.getElementById("resultado-fase2").textContent = "";
+      atualizarProgresso();
+    }
+
+    function verificarAlternativa(index, opcaoSelecionada, respostaCorreta) {
+      if (respostaSelecionadaFase2) return;
+      
+      const alternativas = document.querySelectorAll(".alternativa");
+      const acertou = opcaoSelecionada === respostaCorreta;
+      
+      alternativas.forEach((alt, i) => {
+        if (alt.textContent === respostaCorreta) {
+          alt.classList.add("correta");
+        } else if (i === index) {
+          alt.classList.add("incorreta");
+        }
+      });
+
+      respostaSelecionadaFase2 = true;
+      
+      setTimeout(() => {
+        if (acertou) {
+          atualizarPontuacao(10);
+          if (perguntaAtualFase2 < 5) {
+            perguntaAtualFase2++;
+            prepararDesafioFase2();
+          } else {
+            document.getElementById("resultado-fase2").textContent = "Parabéns! Você completou todas as perguntas!";
+          }
+        } else {
+          atualizarTentativas();
+          if (tentativasRestantes === 0) return;
+          // Limpa as classes e prepara para nova tentativa
+          alternativas.forEach(alt => {
+            alt.classList.remove("correta", "incorreta");
+          });
+          respostaSelecionadaFase2 = false;
+        }
+      }, 1500);
+    }
+
+    function prepararDesafioFase3() {
+      respostaSelecionadaFase3 = false;
+      const versiculoAtual = versiculos[perguntaAtualFase3];
+      const palavrasOriginais = versiculoAtual.palavrasOriginais;
+      
+      document.getElementById("pergunta-atual-fase3").textContent = `Pergunta ${perguntaAtualFase3 + 1} de 6`;
+      document.getElementById("referencia-fase3").textContent = versiculoAtual.referencia;
+      document.getElementById("idioma-original").textContent = `Idioma Original: ${versiculoAtual.idioma}`;
+      document.getElementById("texto-fase3").textContent = versiculoAtual.texto;
+      document.getElementById("definicao-fase3").style.display = "none";
+      document.getElementById("proxima-pergunta-fase3").style.display = "none";
+      
+      const alternativas = document.getElementById("alternativas-fase3");
+      alternativas.innerHTML = "";
+      
+      // Seleciona uma palavra aleatória do versículo atual
+      const palavraAtual = palavrasOriginais[Math.floor(Math.random() * palavrasOriginais.length)];
+      
+      // Cria as alternativas
+      const opcoes = [palavraAtual];
+      
+      // Adiciona outras palavras originais aleatórias de outros versículos
+      while (opcoes.length < 3) {
+        const versiculoAleatorio = versiculos[Math.floor(Math.random() * versiculos.length)];
+        const palavrasAleatorias = versiculoAleatorio.palavrasOriginais;
+        if (palavrasAleatorias && palavrasAleatorias.length > 0) {
+          const palavraAleatoria = palavrasAleatorias[Math.floor(Math.random() * palavrasAleatorias.length)];
+          if (!opcoes.some(op => op.original === palavraAleatoria.original)) {
+            opcoes.push(palavraAleatoria);
+          }
+        }
+      }
+      
+      embaralhar(opcoes).forEach((opcao, index) => {
+        const div = document.createElement("div");
+        div.className = "alternativa";
+        div.textContent = `${opcao.original} (${opcao.transliteracao}) - ${palavraAtual.palavra}`;
+        div.onclick = () => verificarAlternativaFase3(index, opcao, palavraAtual);
+        alternativas.appendChild(div);
+      });
+      
+      document.getElementById("resultado-fase3").textContent = "";
+      atualizarProgresso();
+    }
+
+    function verificarAlternativaFase3(index, opcaoSelecionada, respostaCorreta) {
+      if (respostaSelecionadaFase3) return;
+      
+      const alternativas = document.querySelectorAll("#alternativas-fase3 .alternativa");
+      const acertou = opcaoSelecionada.original === respostaCorreta.original;
+      
+      alternativas.forEach((alt, i) => {
+        if (alt.textContent.includes(respostaCorreta.original)) {
+          alt.classList.add("correta");
+        } else if (i === index) {
+          alt.classList.add("incorreta");
+        }
+      });
+
+      respostaSelecionadaFase3 = true;
+      
+      // Mostra a definição da palavra
+      document.getElementById("definicao-fase3").style.display = "block";
+      document.getElementById("definicao-fase3").textContent = respostaCorreta.definicao;
+      
+      // Mostra o botão de próxima pergunta
+      document.getElementById("proxima-pergunta-fase3").style.display = "block";
+      
+      if (acertou) {
+        atualizarPontuacao(10);
+      } else {
+        atualizarTentativas();
+        if (tentativasRestantes === 0) return;
+      }
+    }
+
+    function proximaPerguntaFase3() {
+      if (perguntaAtualFase3 < 5) {
+        perguntaAtualFase3++;
+        prepararDesafioFase3();
+        document.getElementById("definicao-fase3").style.display = "none";
+        document.getElementById("proxima-pergunta-fase3").style.display = "none";
+      } else {
+        document.getElementById("resultado-fase3").textContent = "Parabéns! Você completou todas as perguntas!";
+        document.getElementById("proxima-pergunta-fase3").style.display = "none";
+      }
+    }
+
+    function mudarFase(numeroFase) {
+      faseAtual = numeroFase;
+      
+      // Esconder todas as fases
+      document.querySelectorAll(".fase-container").forEach(container => {
+        container.classList.remove("ativa");
+        container.style.display = "none";
+      });
+      
+      if (numeroFase === 1) {
+        document.getElementById("fase1").style.display = "block";
+        document.getElementById("fase1").classList.add("ativa");
+        document.querySelector(".fase").textContent = "Fase 1: Complete as lacunas";
+      } else if (numeroFase === 2) {
+        document.getElementById("fase2").style.display = "block";
+        document.getElementById("fase2").classList.add("ativa");
+        document.querySelector(".fase").textContent = "Fase 2: Identifique a referência";
+        prepararDesafioFase2();
+      } else {
+        document.getElementById("fase3").style.display = "block";
+        document.getElementById("fase3").classList.add("ativa");
+        document.querySelector(".fase").textContent = "Fase 3: Identifique a palavra original";
+        prepararDesafioFase3();
+      }
+    }
+
+    // Inicia o desafio ao carregar a página
+    prepararDesafio();
+  </script>
+</body>
+</html>
