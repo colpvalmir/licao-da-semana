@@ -93,11 +93,12 @@
       margin-top: 8px;
       font-size: 1.1rem;
       font-weight: bold;
-      color: var(--cor-primaria);
-      padding: 8px;
-      background-color: var(--cor-fundo);
+      color: white;
+      padding: 12px;
+      background-color: var(--cor-secundaria);
       border-radius: 8px;
       text-align: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
     .alternativas {
@@ -186,12 +187,12 @@
 
     .barra-progresso {
       width: 100%;
-      height: 20px;
+      height: 10px;
       background-color: var(--cor-fundo);
-      border-radius: 10px;
-      margin-top: 8px;
+      border-radius: 5px;
+      margin-top: 5px;
       overflow: hidden;
-      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
     }
 
     .progresso {
@@ -203,7 +204,7 @@
     .tentativas {
       margin-top: 8px;
       color: var(--cor-primaria);
-      font-size: 1rem;
+      font-size: 1.1rem;
       padding: 8px;
       background-color: var(--cor-fundo);
       border-radius: 8px;
@@ -258,34 +259,42 @@
 </head>
 <body>
   <div class="container">
-    <h4 style="text-align: center; color: var(--cor-primaria); margin-bottom: 15px;">2tri/25 Lição adultos de 29/03- 04/04(Leituras da semana 1: Jr 29:23, 24; Sl 139:1; Dn 12:4; Ap 22:10; 2Tm 3:15; Hb 4:12)</h4>
-    <div style="text-align: center; margin-bottom: 15px;">
-      <a href="https://colpvalmir.github.io/licao-da-semana/semana2" style="color: var(--cor-secundaria); text-decoration: none; font-weight: bold;">
-        Clique aqui para acessar a lição da semana 2
-      </a>
+    <div class="fase">Fase 1: Complete as Lacunas</div>
+    <div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 15px; font-size: 0.9rem; color: var(--cor-primaria);">
+      <div class="pontuacao" id="pontuacao">Pontuação: 0</div>
+      <div class="tentativas" id="tentativas">Chances: 3</div>
     </div>
-    <div class="pontuacao" id="pontuacao">Pontuação: 0</div>
-    <div class="tentativas" id="tentativas">Tentativas restantes: 3</div>
-    <div class="barra-progresso">
-      <div class="progresso" id="progresso" style="width: 0%"></div>
-    </div>
-    <div class="fase">Fase 1: Complete as lacunas</div>
     <div id="fase1" class="fase-container ativa">
-      <div class="pergunta" id="pergunta-atual">Pergunta 1 de 6</div>
+      <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 15px;">
+        <div class="pergunta" id="pergunta-atual">Pergunta 1 de 8</div>
+        <div class="barra-progresso" style="flex: 1;">
+          <div class="progresso" id="progresso-fase1" style="width: 0%"></div>
+        </div>
+      </div>
       <div class="referencia" id="referencia"></div>
       <div class="texto-com-lacunas" id="texto-processado"></div>
       <div class="resultado" id="resultado"></div>
     </div>
 
     <div id="fase2" class="fase-container">
-      <div class="pergunta" id="pergunta-atual-fase2">Pergunta 1 de 6</div>
+      <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 15px;">
+        <div class="pergunta" id="pergunta-atual-fase2">Pergunta 1 de 8</div>
+        <div class="barra-progresso" style="flex: 1;">
+          <div class="progresso" id="progresso-fase2" style="width: 0%"></div>
+        </div>
+      </div>
       <p id="texto-fase2" style="font-size: 1.2rem; margin-top: 20px;"></p>
       <div class="alternativas" id="alternativas"></div>
       <div class="resultado" id="resultado-fase2"></div>
     </div>
 
     <div id="fase3" class="fase-container">
-      <div class="pergunta" id="pergunta-atual-fase3">Pergunta 1 de 6</div>
+      <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 15px;">
+        <div class="pergunta" id="pergunta-atual-fase3">Pergunta 1 de 8</div>
+        <div class="barra-progresso" style="flex: 1;">
+          <div class="progresso" id="progresso-fase3" style="width: 0%"></div>
+        </div>
+      </div>
       <div class="referencia" id="referencia-fase3"></div>
       <div class="idioma-original" id="idioma-original"></div>
       <p id="texto-fase3" style="font-size: 1.2rem; margin-top: 20px;"></p>
@@ -299,6 +308,12 @@
       <button onclick="mudarFase(1)" id="btn-fase1">Fase 1</button>
       <button onclick="mudarFase(2)" id="btn-fase2">Fase 2</button>
       <button onclick="mudarFase(3)" id="btn-fase3">Fase 3</button>
+    </div>
+    <h4 style="text-align: center; color: var(--cor-primaria); margin-bottom: 15px;">2tri/25 Lição adultos de 29/03- 04/04(Leituras da semana 1: Jr 29:23, 24; Sl 139:1; Dn 12:4; Ap 22:10; 2Tm 3:15; Hb 4:12)</h4>
+    <div style="text-align: center; margin-bottom: 15px;">
+      <a href="https://colpvalmir.github.io/licao-da-semana/" style="color: var(--cor-secundaria); text-decoration: none; font-weight: bold;">
+        Clique aqui para acessar a lição da semana 2
+      </a>
     </div>
     <button class="reiniciar" id="reiniciar" onclick="reiniciarJogo()">Reiniciar Jogo</button>
   </div>
@@ -324,10 +339,10 @@
         idioma: "Hebraico",
         palavrasOriginais: [
           {
-            palavra: "Senhor",
-            original: "יְהוָה",
-            transliteracao: "YHWH",
-            definicao: "O nome sagrado de Deus em hebraico, conhecido como Tetragrama. Representa o nome próprio do Deus de Israel."
+            palavra: "conheces",
+            original: "יָדַע",
+            transliteracao: "yada",
+            definicao: "Verbo hebraico que significa 'conhecer', 'saber', 'entender'. No contexto bíblico, frequentemente indica um conhecimento íntimo e pessoal."
           }
         ]
       },
@@ -337,10 +352,10 @@
         idioma: "Hebraico",
         palavrasOriginais: [
           {
-            palavra: "Daniel",
-            original: "דָּנִיֵּאל",
-            transliteracao: "Daniyyel",
-            definicao: "Nome hebraico que significa 'Deus é meu juiz'. Foi um profeta do Antigo Testamento."
+            palavra: "tempo",
+            original: "עֵת",
+            transliteracao: "et",
+            definicao: "Palavra hebraica que significa 'tempo', 'época', 'momento'. No contexto bíblico, frequentemente se refere a períodos específicos ou momentos determinados por Deus."
           }
         ]
       },
@@ -367,12 +382,6 @@
             original: "γραφαί",
             transliteracao: "graphai",
             definicao: "Palavra grega que significa 'escritos'. No contexto bíblico, refere-se aos textos sagrados."
-          },
-          {
-            palavra: "Cristo",
-            original: "Χριστός",
-            transliteracao: "Christos",
-            definicao: "Palavra grega que significa 'ungido'. No Novo Testamento, refere-se ao Messias prometido."
           }
         ]
       },
@@ -382,12 +391,50 @@
         idioma: "Grego",
         palavrasOriginais: [
           {
-            palavra: "palavra",
-            original: "λόγος",
-            transliteracao: "logos",
-            definicao: "Palavra grega que significa 'palavra', 'discurso' ou 'razão'. No contexto bíblico, pode se referir à Palavra de Deus ou ao próprio Cristo."
+            palavra: "alma",
+            original: "ψυχή",
+            transliteracao: "psychē",
+            definicao: "Palavra grega que significa 'alma', 'vida', 'ser'. No contexto bíblico, refere-se à parte imaterial do ser humano, que inclui emoções, vontade e personalidade."
           }
         ]
+      },
+      {
+        texto: "Porque a palavra de Deus é viva e eficaz, e mais penetrante do que espada alguma de dois gumes, e penetra até à divisão da alma e do espírito, e das juntas e medulas, e é apta para discernir os pensamentos e intenções do coração.",
+        referencia: "Hebreus 4:12",
+        idioma: "Grego",
+        palavrasOriginais: [
+          {
+            palavra: "espírito",
+            original: "πνεῦμα",
+            transliteracao: "pneuma",
+            definicao: "Palavra grega que significa 'espírito', 'sopro', 'vento'. No contexto bíblico, pode se referir ao Espírito Santo, ao espírito humano ou ao princípio vital."
+          }
+        ]
+      },
+      {
+        texto: "E que desde a tua meninice sabes as sagradas Escrituras, que podem fazer-te sábio para a salvação, pela fé que há em Cristo Jesus.",
+        referencia: "2 Timóteo 3:15",
+        idioma: "Grego",
+        palavrasOriginais: [
+          {
+            palavra: "Cristo",
+            original: "Χριστός",
+            transliteracao: "Christos",
+            definicao: "Palavra grega que significa 'ungido'. No Novo Testamento, refere-se ao Messias prometido."
+          }
+        ]
+      },
+      {
+        texto: "Assim diz o Senhor: Não se glorie o sábio na sua sabedoria, nem se glorie o forte na sua força; não se glorie o rico nas suas riquezas; mas o que se gloriar, glorie-se nisto: em me entender e me conhecer, que eu sou o Senhor, que faço beneficência, juízo e justiça na terra; porque destas coisas me agrado, diz o Senhor.",
+        referencia: "Jeremias 9:23-24",
+        idioma: "Hebraico",
+        palavrasOriginais: []
+      },
+      {
+        texto: "Tomai sobre vós o meu jugo, e aprendei de mim, que sou manso e humilde de coração; e encontrareis descanso para as vossas almas.",
+        referencia: "Mateus 11:29",
+        idioma: "Grego",
+        palavrasOriginais: []
       }
     ];
 
@@ -412,6 +459,7 @@
     // Variáveis da Fase 3
     let perguntaAtualFase3 = 0;
     let respostaSelecionadaFase3 = false;
+    let palavrasUsadasFase3 = new Set();
 
     function atualizarPontuacao(pontos) {
       pontuacao += pontos;
@@ -420,7 +468,7 @@
 
     function atualizarTentativas() {
       tentativasRestantes--;
-      document.getElementById("tentativas").textContent = `Tentativas restantes: ${tentativasRestantes}`;
+      document.getElementById("tentativas").textContent = `Chances: ${tentativasRestantes}`;
       
       if (tentativasRestantes === 0) {
         document.getElementById("reiniciar").style.display = "block";
@@ -429,20 +477,11 @@
         });
         document.querySelector(".navegacao").style.display = "none";
         document.querySelector(".fase").style.display = "none";
-        document.querySelector(".barra-progresso").style.display = "none";
       }
     }
 
     function atualizarProgresso() {
-      let progresso;
-      if (faseAtual === 1) {
-        progresso = (perguntaAtual / 6) * 100;
-      } else if (faseAtual === 2) {
-        progresso = (perguntaAtualFase2 / 6) * 100;
-      } else {
-        progresso = (perguntaAtualFase3 / 6) * 100;
-      }
-      document.getElementById("progresso").style.width = `${progresso}%`;
+      // Função vazia, pois removemos a barra de progresso
     }
 
     function reiniciarJogo() {
@@ -457,14 +496,12 @@
       document.getElementById("reiniciar").style.display = "none";
       document.querySelector(".navegacao").style.display = "flex";
       document.querySelector(".fase").style.display = "block";
-      document.querySelector(".barra-progresso").style.display = "block";
       
       // Atualizar textos
       document.getElementById("pontuacao").textContent = `Pontuação: ${pontuacao}`;
-      document.getElementById("tentativas").textContent = `Tentativas restantes: ${tentativasRestantes}`;
+      document.getElementById("tentativas").textContent = `Chances: ${tentativasRestantes}`;
       
       // Reiniciar o jogo
-      prepararDesafio();
       mudarFase(1);
     }
 
@@ -500,8 +537,14 @@
         }
       }).join(" ");
 
+      // Atualiza o contador de perguntas limitado a 8
+      document.getElementById("pergunta-atual").textContent = `Pergunta ${perguntaAtual + 1} de 8`;
+      
+      // Atualiza a barra de progresso limitado a 8
+      const progresso = ((perguntaAtual + 1) / 8) * 100;
+      document.getElementById("progresso-fase1").style.width = `${progresso}%`;
+
       document.getElementById("texto-processado").innerHTML = textoComLacunas;
-      document.getElementById("pergunta-atual").textContent = `Pergunta ${perguntaAtual + 1} de 6`;
       document.getElementById("referencia").textContent = versiculos[perguntaAtual].referencia;
 
       const opcoes = embaralhar([...palavrasSelecionadas]);
@@ -518,7 +561,6 @@
       }
 
       document.getElementById("resultado").textContent = "";
-      atualizarProgresso();
     }
 
     function verificarRespostaFase1(index) {
@@ -548,7 +590,7 @@
         respostaCompletaFase1 = true;
         atualizarPontuacao(10);
         setTimeout(() => {
-          if (perguntaAtual < 5) {
+          if (perguntaAtual < 7) {
             perguntaAtual++;
             prepararDesafio();
           } else {
@@ -563,8 +605,14 @@
       versiculosEmbaralhados = embaralhar([...versiculos]);
       const versiculoAtual = versiculos[perguntaAtualFase2];
       
+      // Atualiza o contador de perguntas limitado a 8
+      document.getElementById("pergunta-atual-fase2").textContent = `Pergunta ${perguntaAtualFase2 + 1} de 8`;
+      
+      // Atualiza a barra de progresso limitado a 8
+      const progresso = ((perguntaAtualFase2 + 1) / 8) * 100;
+      document.getElementById("progresso-fase2").style.width = `${progresso}%`;
+      
       document.getElementById("texto-fase2").textContent = versiculoAtual.texto;
-      document.getElementById("pergunta-atual-fase2").textContent = `Pergunta ${perguntaAtualFase2 + 1} de 6`;
       
       const alternativas = document.getElementById("alternativas");
       alternativas.innerHTML = "";
@@ -587,7 +635,6 @@
       });
       
       document.getElementById("resultado-fase2").textContent = "";
-      atualizarProgresso();
     }
 
     function verificarAlternativa(index, opcaoSelecionada, respostaCorreta) {
@@ -609,7 +656,7 @@
       setTimeout(() => {
         if (acertou) {
           atualizarPontuacao(10);
-          if (perguntaAtualFase2 < 5) {
+          if (perguntaAtualFase2 < 7) {
             perguntaAtualFase2++;
             prepararDesafioFase2();
           } else {
@@ -629,10 +676,33 @@
 
     function prepararDesafioFase3() {
       respostaSelecionadaFase3 = false;
+      
+      // Verifica se ainda há perguntas para mostrar
+      if (perguntaAtualFase3 >= 8) {
+        document.getElementById("resultado-fase3").textContent = "Parabéns! Você completou todas as perguntas!";
+        document.getElementById("proxima-pergunta-fase3").style.display = "none";
+        return;
+      }
+
       const versiculoAtual = versiculos[perguntaAtualFase3];
       const palavrasOriginais = versiculoAtual.palavrasOriginais;
       
-      document.getElementById("pergunta-atual-fase3").textContent = `Pergunta ${perguntaAtualFase3 + 1} de 6`;
+      // Verifica se existem palavras originais disponíveis
+      if (!palavrasOriginais || palavrasOriginais.length === 0) {
+        console.error("Nenhuma palavra original encontrada para o versículo:", versiculoAtual.referencia);
+        return;
+      }
+      
+      // Seleciona a primeira palavra original do versículo
+      const palavraAtual = palavrasOriginais[0];
+      
+      // Atualiza o contador de perguntas limitado a 8
+      document.getElementById("pergunta-atual-fase3").textContent = `Pergunta ${perguntaAtualFase3 + 1} de 8`;
+      
+      // Atualiza a barra de progresso limitado a 8
+      const progresso = ((perguntaAtualFase3 + 1) / 8) * 100;
+      document.getElementById("progresso-fase3").style.width = `${progresso}%`;
+      
       document.getElementById("referencia-fase3").textContent = versiculoAtual.referencia;
       document.getElementById("idioma-original").textContent = `Idioma Original: ${versiculoAtual.idioma}`;
       document.getElementById("texto-fase3").textContent = versiculoAtual.texto;
@@ -641,9 +711,6 @@
       
       const alternativas = document.getElementById("alternativas-fase3");
       alternativas.innerHTML = "";
-      
-      // Seleciona uma palavra aleatória do versículo atual
-      const palavraAtual = palavrasOriginais[Math.floor(Math.random() * palavrasOriginais.length)];
       
       // Cria as alternativas
       const opcoes = [palavraAtual];
@@ -669,7 +736,6 @@
       });
       
       document.getElementById("resultado-fase3").textContent = "";
-      atualizarProgresso();
     }
 
     function verificarAlternativaFase3(index, opcaoSelecionada, respostaCorreta) {
@@ -704,7 +770,7 @@
     }
 
     function proximaPerguntaFase3() {
-      if (perguntaAtualFase3 < 5) {
+      if (perguntaAtualFase3 < 7) {
         perguntaAtualFase3++;
         prepararDesafioFase3();
         document.getElementById("definicao-fase3").style.display = "none";
@@ -728,6 +794,7 @@
         document.getElementById("fase1").style.display = "block";
         document.getElementById("fase1").classList.add("ativa");
         document.querySelector(".fase").textContent = "Fase 1: Complete as lacunas";
+        prepararDesafio();
       } else if (numeroFase === 2) {
         document.getElementById("fase2").style.display = "block";
         document.getElementById("fase2").classList.add("ativa");
@@ -737,12 +804,15 @@
         document.getElementById("fase3").style.display = "block";
         document.getElementById("fase3").classList.add("ativa");
         document.querySelector(".fase").textContent = "Fase 3: Identifique a palavra original";
+        perguntaAtualFase3 = 0;
         prepararDesafioFase3();
       }
     }
 
     // Inicia o desafio ao carregar a página
-    prepararDesafio();
+    window.onload = function() {
+      prepararDesafio();
+    };
   </script>
 </body>
 </html>
