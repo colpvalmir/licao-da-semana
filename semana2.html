@@ -236,6 +236,27 @@
       line-height: 1.6;
     }
 
+    .tela-cheia {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 12px 20px;
+      background-color: var(--cor-secundaria);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1.2rem;
+      z-index: 1000;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s;
+    }
+
+    .tela-cheia:hover {
+      background-color: #2980b9;
+      transform: translateY(-2px);
+    }
+
     @media (max-width: 600px) {
       body {
         padding: 5px;
@@ -253,6 +274,11 @@
       .navegacao button {
         flex: 1;
         min-width: 120px;
+      }
+
+      .tela-cheia {
+        padding: 15px 25px;
+        font-size: 1.3rem;
       }
     }
   </style>
@@ -316,6 +342,7 @@
       </a>
     </div>
     <button class="reiniciar" id="reiniciar" onclick="reiniciarJogo()">Reiniciar Jogo</button>
+    <button class="tela-cheia" id="tela-cheia" onclick="alternarTelaCheia()">Tela Cheia</button>
   </div>
 
   <script>
@@ -808,6 +835,26 @@
         prepararDesafioFase3();
       }
     }
+
+    function alternarTelaCheia() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    }
+
+    // Atualiza o texto do botão quando o modo de tela cheia muda
+    document.addEventListener('fullscreenchange', function() {
+      const botao = document.getElementById('tela-cheia');
+      if (document.fullscreenElement) {
+        botao.textContent = 'Sair da Tela Cheia';
+      } else {
+        botao.textContent = 'Tela Cheia';
+      }
+    });
 
     // Inicia o desafio ao carregar a página
     window.onload = function() {
