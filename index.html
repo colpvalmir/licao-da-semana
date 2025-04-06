@@ -24,11 +24,12 @@
       height: 100vh;
       display: flex;
       flex-direction: column;
+      font-size: 18px;
     }
 
     .container {
       background-color: white;
-      padding: 15px;
+      padding: 20px;
       border-radius: 15px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       flex: 1;
@@ -38,10 +39,10 @@
     }
 
     select {
-      margin: 0 3px;
-      font-size: 0.9rem;
-      padding: 6px 10px;
-      border-radius: 6px;
+      margin: 0 5px;
+      font-size: 1.2rem;
+      padding: 10px 15px;
+      border-radius: 8px;
       border: 2px solid var(--cor-borda);
       transition: all 0.3s;
       background-color: white;
@@ -65,16 +66,17 @@
     }
 
     .resultado {
-      margin-top: 10px;
+      margin-top: 20px;
       font-weight: bold;
-      padding: 10px;
-      border-radius: 8px;
+      padding: 15px;
+      border-radius: 10px;
       background-color: var(--cor-fundo);
+      font-size: 1.2rem;
     }
 
     .pergunta {
-      margin-top: 8px;
-      font-size: 1rem;
+      margin-top: 15px;
+      font-size: 1.4rem;
       color: var(--cor-primaria);
       font-weight: 500;
     }
@@ -82,37 +84,38 @@
     .referencia {
       font-style: italic;
       color: var(--cor-secundaria);
-      margin-bottom: 8px;
-      padding: 8px;
+      margin-bottom: 15px;
+      padding: 15px;
       background-color: var(--cor-fundo);
-      border-radius: 8px;
+      border-radius: 10px;
       border-left: 4px solid var(--cor-secundaria);
+      font-size: 1.2rem;
     }
 
     .fase {
-      margin-top: 8px;
-      font-size: 1.1rem;
+      margin-top: 15px;
+      font-size: 1.5rem;
       font-weight: bold;
       color: white;
-      padding: 12px;
+      padding: 20px;
       background-color: var(--cor-secundaria);
-      border-radius: 8px;
+      border-radius: 10px;
       text-align: center;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
     .alternativas {
-      margin-top: 15px;
+      margin-top: 25px;
     }
 
     .alternativa {
-      margin: 8px 0;
-      padding: 10px;
+      margin: 15px 0;
+      padding: 15px;
       border: 2px solid var(--cor-borda);
-      border-radius: 8px;
+      border-radius: 10px;
       cursor: pointer;
       transition: all 0.3s;
-      font-size: 1rem;
+      font-size: 1.2rem;
     }
 
     .alternativa:hover {
@@ -141,12 +144,12 @@
     }
 
     .navegacao button {
-      padding: 8px 15px;
+      padding: 15px 25px;
       border: none;
       border-radius: 6px;
       background-color: var(--cor-secundaria);
       color: white;
-      font-size: 1rem;
+      font-size: 1.2rem;
       cursor: pointer;
       transition: all 0.3s;
     }
@@ -167,30 +170,30 @@
     }
 
     .texto-com-lacunas {
-      line-height: 1.8;
-      font-size: 1.1rem;
-      padding: 15px;
+      line-height: 2;
+      font-size: 1.3rem;
+      padding: 20px;
       background-color: var(--cor-fundo);
-      border-radius: 8px;
+      border-radius: 10px;
     }
 
-    .pontuacao {
-      margin-top: 8px;
-      font-size: 1.1rem;
+    .pontuacao, .tentativas {
+      margin-top: 15px;
+      font-size: 1.3rem;
       font-weight: bold;
       color: var(--cor-primaria);
-      padding: 8px;
+      padding: 15px;
       background-color: var(--cor-fundo);
-      border-radius: 8px;
+      border-radius: 10px;
       text-align: center;
     }
 
     .barra-progresso {
       width: 100%;
-      height: 10px;
+      height: 15px;
       background-color: var(--cor-fundo);
-      border-radius: 5px;
-      margin-top: 5px;
+      border-radius: 8px;
+      margin-top: 10px;
       overflow: hidden;
       box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
     }
@@ -201,26 +204,16 @@
       transition: width 0.5s ease-in-out;
     }
 
-    .tentativas {
-      margin-top: 8px;
-      color: var(--cor-primaria);
-      font-size: 1.1rem;
-      padding: 8px;
-      background-color: var(--cor-fundo);
-      border-radius: 8px;
-      text-align: center;
-    }
-
     .reiniciar {
       display: none;
       margin: 15px auto;
-      padding: 10px 20px;
+      padding: 15px 30px;
       background-color: var(--cor-erro);
       color: white;
       border: none;
       border-radius: 6px;
       cursor: pointer;
-      font-size: 1rem;
+      font-size: 1.2rem;
       transition: all 0.3s;
     }
 
@@ -230,29 +223,82 @@
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
 
-    #texto-fase2 {
-      font-size: 1.1rem;
-      margin-top: 10px;
-      line-height: 1.6;
+    #texto-fase2, #texto-fase3 {
+      font-size: 1.4rem;
+      margin-top: 25px;
+      line-height: 1.8;
+    }
+
+    .definicao {
+      font-size: 1.2rem;
+      padding: 15px;
     }
 
     @media (max-width: 600px) {
       body {
         padding: 5px;
+        font-size: 20px;
       }
       
       .container {
-        padding: 10px;
+        padding: 15px;
       }
       
       .navegacao {
         flex-direction: row;
         flex-wrap: wrap;
+        gap: 10px;
       }
       
       .navegacao button {
         flex: 1;
-        min-width: 120px;
+        min-width: 140px;
+        padding: 15px;
+        font-size: 1.3rem;
+      }
+
+      select {
+        font-size: 1.3rem;
+        padding: 12px;
+      }
+
+      .texto-com-lacunas {
+        font-size: 1.4rem;
+        line-height: 2.2;
+      }
+
+      .alternativa {
+        font-size: 1.3rem;
+        padding: 18px;
+      }
+
+      .resultado {
+        font-size: 1.3rem;
+        padding: 18px;
+      }
+
+      .referencia {
+        font-size: 1.3rem;
+        padding: 15px;
+      }
+
+      .pergunta {
+        font-size: 1.4rem;
+      }
+
+      .pontuacao, .tentativas {
+        font-size: 1.4rem;
+        padding: 15px;
+      }
+
+      .fase {
+        font-size: 1.6rem;
+        padding: 25px;
+      }
+
+      h4 {
+        font-size: 1.2rem;
+        padding: 15px;
       }
     }
   </style>
@@ -311,7 +357,7 @@
     </div>
     <h4 style="text-align: center; color: var(--cor-primaria); margin-bottom: 15px;">2tri/25 Lição adultos de 29/03- 04/04(Leituras da semana 1: Jr 29:23, 24; Sl 139:1; Dn 12:4; Ap 22:10; 2Tm 3:15; Hb 4:12)</h4>
     <div style="text-align: center; margin-bottom: 15px;">
-      <a href="https://colpvalmir.github.io/licao-da-semana/semana2" style="color: var(--cor-secundaria); text-decoration: none; font-weight: bold;">
+      <a href="https://colpvalmir.github.io/licao-da-semana/" style="color: var(--cor-secundaria); text-decoration: none; font-weight: bold;">
         Clique aqui para acessar a lição da semana 2
       </a>
     </div>
@@ -321,120 +367,108 @@
   <script>
     const versiculos = [
       {
-        texto: "Porque eles cometeram loucura em Israel, e adulteraram com as mulheres de seus próximos, e deram palavras falsas em meu nome, o que eu não lhes mandei; e eu o sei, e sou testemunha disso, diz o Senhor.",
-        referencia: "Jeremias 29:23",
+        texto: "Seca-se a erva, e cai a flor, soprando nela o Espírito do Senhor. Na verdade o povo é erva. Seca-se a erva, e cai a flor, porém a palavra de nosso Deus subsiste eternamente.",
+        referencia: "Isaías 40:7-8",
         idioma: "Hebraico",
         palavrasOriginais: [
           {
-            palavra: "Senhor",
-            original: "יְהוָה",
-            transliteracao: "YHWH",
-            definicao: "O nome sagrado de Deus em hebraico, conhecido como Tetragrama. Representa o nome próprio do Deus de Israel."
+            palavra: "palavra",
+            original: "דָּבָר",
+            transliteracao: "davar",
+            definicao: "Palavra hebraica que significa 'palavra', 'coisa', 'assunto'. No contexto bíblico, frequentemente se refere à palavra de Deus ou à sua revelação."
           }
         ]
       },
       {
-        texto: "Senhor, tu me sondaste, e me conheces.",
-        referencia: "Salmos 139:1",
+        texto: "E aconteceu depois destas coisas, que provou Deus a Abraão, e disse-lhe: Abraão! E ele disse: Eis-me aqui. E disse: Toma agora o teu filho, o teu único filho, Isaque, a quem amas, e vai-te à terra de Moriá, e oferece-o ali em holocausto sobre uma das montanhas, que eu te direi.",
+        referencia: "Gênesis 22:1-2",
         idioma: "Hebraico",
         palavrasOriginais: [
           {
-            palavra: "conheces",
-            original: "יָדַע",
-            transliteracao: "yada",
-            definicao: "Verbo hebraico que significa 'conhecer', 'saber', 'entender'. No contexto bíblico, frequentemente indica um conhecimento íntimo e pessoal."
+            palavra: "provar",
+            original: "נָסָה",
+            transliteracao: "nasah",
+            definicao: "Verbo hebraico que significa 'provar', 'testar', 'tentar'. No contexto bíblico, frequentemente se refere a Deus testando a fé ou o caráter de alguém."
           }
         ]
       },
       {
-        texto: "E tu, Daniel, fecha estas palavras e sela este livro, até ao fim do tempo; muitos correrão de uma parte para outra, e a ciência se multiplicará.",
-        referencia: "Daniel 12:4",
-        idioma: "Hebraico",
-        palavrasOriginais: [
-          {
-            palavra: "tempo",
-            original: "עֵת",
-            transliteracao: "et",
-            definicao: "Palavra hebraica que significa 'tempo', 'época', 'momento'. No contexto bíblico, frequentemente se refere a períodos específicos ou momentos determinados por Deus."
-          }
-        ]
-      },
-      {
-        texto: "E disse-me: Não seles as palavras da profecia deste livro; porque próximo está o tempo.",
-        referencia: "Apocalipse 22:10",
+        texto: "Porque Deus amou o mundo de tal maneira que deu o seu Filho unigênito, para que todo aquele que nele crê não pereça, mas tenha a vida eterna.",
+        referencia: "João 3:16",
         idioma: "Grego",
         palavrasOriginais: [
           {
-            palavra: "profecia",
-            original: "προφητεία",
-            transliteracao: "prophēteia",
-            definicao: "Palavra grega que significa 'profecia' ou 'mensagem profética'. Refere-se à comunicação da vontade de Deus."
+            palavra: "amou",
+            original: "ἠγάπησεν",
+            transliteracao: "ēgapēsen",
+            definicao: "Verbo grego que significa 'amar'. No Novo Testamento, frequentemente se refere ao amor divino, incondicional e sacrificial."
           }
         ]
       },
       {
-        texto: "E que desde a tua meninice sabes as sagradas Escrituras, que podem fazer-te sábio para a salvação, pela fé que há em Cristo Jesus.",
-        referencia: "2 Timóteo 3:15",
+        texto: "E disse-me um dos anciãos: Não chores; eis aqui o Leão da tribo de Judá, a raiz de Davi, que venceu, para abrir o livro e desatar os seus sete selos.",
+        referencia: "Apocalipse 5:5",
         idioma: "Grego",
         palavrasOriginais: [
           {
-            palavra: "Escrituras",
-            original: "γραφαί",
-            transliteracao: "graphai",
-            definicao: "Palavra grega que significa 'escritos'. No contexto bíblico, refere-se aos textos sagrados."
+            palavra: "vencer",
+            original: "ἐνίκησεν",
+            transliteracao: "enikēsen",
+            definicao: "Verbo grego que significa 'vencer', 'conquistar', 'triunfar'. No contexto bíblico, frequentemente se refere à vitória de Cristo sobre o pecão e a morte."
           }
         ]
       },
       {
-        texto: "Porque a palavra de Deus é viva e eficaz, e mais penetrante do que espada alguma de dois gumes, e penetra até à divisão da alma e do espírito, e das juntas e medulas, e é apta para discernir os pensamentos e intenções do coração.",
-        referencia: "Hebreus 4:12",
+        texto: "E também somos considerados como falsas testemunhas de Deus, porque testificamos de Deus, que ressuscitou a Cristo, ao qual ele não ressuscitou, se, na verdade, os mortos não ressuscitam.",
+        referencia: "1 Coríntios 15:15",
         idioma: "Grego",
         palavrasOriginais: [
           {
-            palavra: "alma",
-            original: "ψυχή",
-            transliteracao: "psychē",
-            definicao: "Palavra grega que significa 'alma', 'vida', 'ser'. No contexto bíblico, refere-se à parte imaterial do ser humano, que inclui emoções, vontade e personalidade."
+            palavra: "ressuscitar",
+            original: "ἤγειρεν",
+            transliteracao: "ēgeiren",
+            definicao: "Verbo grego que significa 'levantar', 'ressuscitar'. No contexto bíblico, frequentemente se refere à ressurreição de Cristo e dos mortos."
           }
         ]
       },
       {
-        texto: "Porque a palavra de Deus é viva e eficaz, e mais penetrante do que espada alguma de dois gumes, e penetra até à divisão da alma e do espírito, e das juntas e medulas, e é apta para discernir os pensamentos e intenções do coração.",
-        referencia: "Hebreus 4:12",
+        texto: "E viu-se um grande sinal no céu: uma mulher vestida do sol, tendo a lua debaixo dos seus pés, e uma coroa de doze estrelas sobre a sua cabeça.",
+        referencia: "Apocalipse 12:1",
         idioma: "Grego",
         palavrasOriginais: [
           {
-            palavra: "espírito",
-            original: "πνεῦμα",
-            transliteracao: "pneuma",
-            definicao: "Palavra grega que significa 'espírito', 'sopro', 'vento'. No contexto bíblico, pode se referir ao Espírito Santo, ao espírito humano ou ao princípio vital."
+            palavra: "sinal",
+            original: "σημεῖον",
+            transliteracao: "sēmeion",
+            definicao: "Palavra grega que significa 'sinal', 'milagre', 'maravilha'. No contexto bíblico, frequentemente se refere a sinais divinos ou proféticos."
           }
         ]
       },
       {
-        texto: "E que desde a tua meninice sabes as sagradas Escrituras, que podem fazer-te sábio para a salvação, pela fé que há em Cristo Jesus.",
-        referencia: "2 Timóteo 3:15",
+        texto: "E viu-se um grande sinal no céu: uma mulher vestida do sol, tendo a lua debaixo dos seus pés, e uma coroa de doze estrelas sobre a sua cabeça.",
+        referencia: "Apocalipse 12:1",
         idioma: "Grego",
         palavrasOriginais: [
           {
-            palavra: "Cristo",
-            original: "Χριστός",
-            transliteracao: "Christos",
-            definicao: "Palavra grega que significa 'ungido'. No Novo Testamento, refere-se ao Messias prometido."
+            palavra: "mulher",
+            original: "γυνή",
+            transliteracao: "gynē",
+            definicao: "Palavra grega que significa 'mulher', 'esposa'. No contexto bíblico, pode se referir tanto a uma mulher literal quanto a um símbolo profético."
           }
         ]
       },
       {
-        texto: "Assim diz o Senhor: Não se glorie o sábio na sua sabedoria, nem se glorie o forte na sua força; não se glorie o rico nas suas riquezas; mas o que se gloriar, glorie-se nisto: em me entender e me conhecer, que eu sou o Senhor, que faço beneficência, juízo e justiça na terra; porque destas coisas me agrado, diz o Senhor.",
-        referencia: "Jeremias 9:23-24",
-        idioma: "Hebraico",
-        palavrasOriginais: []
-      },
-      {
-        texto: "Tomai sobre vós o meu jugo, e aprendei de mim, que sou manso e humilde de coração; e encontrareis descanso para as vossas almas.",
-        referencia: "Mateus 11:29",
+        texto: "E viu-se um grande sinal no céu: uma mulher vestida do sol, tendo a lua debaixo dos seus pés, e uma coroa de doze estrelas sobre a sua cabeça.",
+        referencia: "Apocalipse 12:1",
         idioma: "Grego",
-        palavrasOriginais: []
+        palavrasOriginais: [
+          {
+            palavra: "coroa",
+            original: "στέφανος",
+            transliteracao: "stephanos",
+            definicao: "Palavra grega que significa 'coroa', 'grinalda'. No contexto bíblico, frequentemente se refere a uma coroa de vitória ou recompensa."
+          }
+        ]
       }
     ];
 
